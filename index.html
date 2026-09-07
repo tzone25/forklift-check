@@ -1,534 +1,624 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Forklift Check">
 
 <title>Forklift Check</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
-:root {
-  --bg: #f3f4f6;
-  --card: #ffffff;
-  --text: #111827;
-  --muted: #6b7280;
-  --border: #e5e7eb;
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --green: #16a34a;
-  --red: #dc2626;
-  --orange: #ea580c;
-  --shadow: 0 4px 18px rgba(0,0,0,.07);
-}
-
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-}
-
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-header {
-  background: #111827;
-  color: white;
-  padding: 18px 16px;
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  box-shadow: 0 2px 10px rgba(0,0,0,.15);
-}
-
-.header-inner {
-  max-width: 1100px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.logo-icon {
-  font-size: 34px;
-}
-
-.logo h1 {
-  font-size: 21px;
-  margin: 0;
-}
-
-.logo p {
-  margin: 3px 0 0;
-  color: #d1d5db;
-  font-size: 12px;
-}
-
-main {
-  max-width: 1100px;
-  margin: auto;
-  padding: 18px 14px 50px;
-}
-
-.nav {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  margin-bottom: 18px;
-}
-
-.nav button {
-  border: 0;
-  background: white;
-  color: var(--text);
-  padding: 11px 15px;
-  border-radius: 10px;
-  white-space: nowrap;
-  box-shadow: var(--shadow);
-}
-
-.nav button.active {
-  background: var(--primary);
-  color: white;
-}
-
-.page {
-  display: none;
-}
-
-.page.active {
-  display: block;
-}
-
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 18px;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow);
-}
-
-.card h2,
-.card h3 {
-  margin-top: 0;
-}
-
-.hero {
-  background: linear-gradient(135deg, #111827, #1f2937);
-  color: white;
-  border-radius: 18px;
-  padding: 24px;
-  margin-bottom: 16px;
-}
-
-.hero h2 {
-  margin: 0 0 8px;
-  font-size: 27px;
-}
-
-.hero p {
-  margin: 0;
-  color: #d1d5db;
-}
-
-.primary-btn {
-  border: 0;
-  background: var(--primary);
-  color: white;
-  padding: 14px 18px;
-  border-radius: 11px;
-  font-weight: 700;
-  margin-top: 15px;
-}
-
-.primary-btn:hover {
-  background: var(--primary-dark);
-}
-
-.secondary-btn {
-  border: 1px solid var(--border);
-  background: white;
-  color: var(--text);
-  padding: 11px 15px;
-  border-radius: 10px;
-  font-weight: 600;
-}
-
-.danger-btn {
-  border: 0;
-  background: var(--red);
-  color: white;
-  padding: 11px 15px;
-  border-radius: 10px;
-  font-weight: 700;
-}
-
-.success-btn {
-  border: 0;
-  background: var(--green);
-  color: white;
-  padding: 11px 15px;
-  border-radius: 10px;
-  font-weight: 700;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-}
-
-.stat {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 16px;
-  box-shadow: var(--shadow);
-}
-
-.stat-number {
-  font-size: 28px;
-  font-weight: 800;
-}
-
-.stat-label {
-  color: var(--muted);
-  font-size: 13px;
-  margin-top: 3px;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.field.full {
-  grid-column: 1 / -1;
-}
-
-.field label {
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.field input,
-.field textarea,
-.field select {
-  width: 100%;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  padding: 12px;
-  background: white;
-  color: var(--text);
-}
-
-.field textarea {
-  min-height: 90px;
-  resize: vertical;
-}
-
-.section-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.section-title h3 {
-  margin: 0;
-}
-
-.check-item {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 13px;
-  margin-bottom: 9px;
-  background: #fafafa;
-}
-
-.check-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-
-.check-name {
-  font-weight: 650;
-}
-
-.check-buttons {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.check-buttons button {
-  border: 1px solid #d1d5db;
-  background: white;
-  color: #374151;
-  padding: 8px 11px;
-  border-radius: 8px;
-  font-weight: 700;
-}
-
-.check-buttons button.pass.selected {
-  background: #dcfce7;
-  color: #166534;
-  border-color: #86efac;
-}
-
-.check-buttons button.fail.selected {
-  background: #fee2e2;
-  color: #991b1b;
-  border-color: #fca5a5;
-}
-
-.check-buttons button.na.selected {
-  background: #e5e7eb;
-  color: #374151;
-  border-color: #9ca3af;
-}
-
-.fault-box {
-  display: none;
-  margin-top: 10px;
-}
-
-.fault-box.show {
-  display: block;
-}
-
-.fault-box textarea {
-  width: 100%;
-  border: 1px solid #fca5a5;
-  border-radius: 9px;
-  padding: 10px;
-  min-height: 65px;
-}
-
-.status {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 800;
-}
-
-.status.pass {
-  background: #dcfce7;
-  color: #166534;
-}
-
-.status.fail {
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-.status.open {
-  background: #ffedd5;
-  color: #9a3412;
-}
-
-.status.closed {
-  background: #dcfce7;
-  color: #166534;
-}
-
-.record {
-  border: 1px solid var(--border);
-  border-radius: 13px;
-  padding: 15px;
-  margin-bottom: 10px;
-  background: white;
-}
-
-.record-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  align-items: center;
-}
-
-.record small {
-  color: var(--muted);
-}
-
-.record-actions {
-  display: flex;
-  gap: 7px;
-  margin-top: 12px;
-  flex-wrap: wrap;
-}
-
-.alert {
-  border-radius: 13px;
-  padding: 14px;
-  margin-bottom: 12px;
-}
-
-.alert.danger {
-  background: #fee2e2;
-  color: #7f1d1d;
-  border: 1px solid #fecaca;
-}
-
-.alert.warning {
-  background: #ffedd5;
-  color: #7c2d12;
-  border: 1px solid #fed7aa;
-}
-
-.empty {
-  text-align: center;
-  color: var(--muted);
-  padding: 30px 15px;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.55);
-  z-index: 100;
-  padding: 20px;
-  overflow-y: auto;
-}
-
-.modal.show {
-  display: block;
-}
-
-.modal-content {
-  max-width: 700px;
-  margin: 30px auto;
-  background: white;
-  border-radius: 17px;
-  padding: 20px;
-}
-
-.modal-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.close {
-  border: 0;
-  background: #f3f4f6;
-  border-radius: 50%;
-  width: 38px;
-  height: 38px;
-  font-size: 20px;
-}
-
-footer {
-  text-align: center;
-  color: var(--muted);
-  font-size: 12px;
-  padding: 25px;
-}
-
-@media (max-width: 750px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+*{box-sizing:border-box}
+:root{
+  --bg:#f3f4f6;
+  --card:#fff;
+  --text:#111827;
+  --muted:#6b7280;
+  --line:#e5e7eb;
+  --primary:#2563eb;
+  --primary-dark:#1d4ed8;
+  --green:#16a34a;
+  --red:#dc2626;
+  --orange:#ea580c;
+  --yellow:#ca8a04;
+  --shadow:0 4px 18px rgba(0,0,0,.08);
+}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+button,input,select,textarea{
+  font:inherit;
+}
+button{
+  cursor:pointer;
+}
+.app{
+  min-height:100vh;
+}
+.header{
+  background:#111827;
+  color:white;
+  padding:18px 20px;
+  position:sticky;
+  top:0;
+  z-index:20;
+  box-shadow:0 2px 10px rgba(0,0,0,.18);
+}
+.header-inner{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.logo-icon{
+  width:42px;
+  height:42px;
+  border-radius:11px;
+  background:#fbbf24;
+  display:grid;
+  place-items:center;
+  font-size:23px;
+}
+.logo h1{
+  margin:0;
+  font-size:20px;
+}
+.logo small{
+  color:#cbd5e1;
+}
+.status-dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#22c55e;
+  display:inline-block;
+  margin-right:6px;
+}
+.layout{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  min-height:calc(100vh - 79px);
+}
+.sidebar{
+  width:230px;
+  background:white;
+  border-right:1px solid var(--line);
+  padding:18px 12px;
+  flex-shrink:0;
+}
+.nav-btn{
+  width:100%;
+  border:0;
+  background:transparent;
+  padding:13px 14px;
+  text-align:left;
+  border-radius:10px;
+  margin-bottom:5px;
+  color:#374151;
+  font-weight:600;
+}
+.nav-btn:hover,
+.nav-btn.active{
+  background:#eff6ff;
+  color:var(--primary);
+}
+.main{
+  flex:1;
+  padding:22px;
+  min-width:0;
+}
+.page{
+  display:none;
+}
+.page.active{
+  display:block;
+}
+.page-title{
+  margin-bottom:20px;
+}
+.page-title h2{
+  margin:0 0 5px;
+  font-size:27px;
+}
+.page-title p{
+  margin:0;
+  color:var(--muted);
+}
+.grid{
+  display:grid;
+  gap:16px;
+}
+.grid-4{
+  grid-template-columns:repeat(4,1fr);
+}
+.grid-3{
+  grid-template-columns:repeat(3,1fr);
+}
+.grid-2{
+  grid-template-columns:repeat(2,1fr);
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:18px;
+  box-shadow:var(--shadow);
+}
+.stat{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.stat-number{
+  font-size:31px;
+  font-weight:800;
+}
+.stat-label{
+  color:var(--muted);
+  font-size:14px;
+  margin-top:3px;
+}
+.stat-icon{
+  font-size:30px;
+}
+.green{color:var(--green)}
+.red{color:var(--red)}
+.orange{color:var(--orange)}
+.blue{color:var(--primary)}
+.yellow{color:var(--yellow)}
+
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:11px 16px;
+  font-weight:700;
+  transition:.15s;
+}
+.btn:hover{
+  transform:translateY(-1px);
+}
+.btn-primary{
+  background:var(--primary);
+  color:white;
+}
+.btn-primary:hover{
+  background:var(--primary-dark);
+}
+.btn-secondary{
+  background:#e5e7eb;
+  color:#111827;
+}
+.btn-danger{
+  background:#fee2e2;
+  color:#991b1b;
+}
+.btn-success{
+  background:#dcfce7;
+  color:#166534;
+}
+.btn-warning{
+  background:#ffedd5;
+  color:#9a3412;
+}
+.btn-dark{
+  background:#111827;
+  color:white;
+}
+.actions{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+}
+.section-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:14px;
+}
+.section-header h3{
+  margin:0;
+}
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+.form-group{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.form-group.full{
+  grid-column:1/-1;
+}
+label{
+  font-weight:700;
+  font-size:14px;
+}
+input,select,textarea{
+  width:100%;
+  border:1px solid #d1d5db;
+  border-radius:9px;
+  padding:11px 12px;
+  background:white;
+  color:#111827;
+}
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+input:focus,select:focus,textarea:focus{
+  outline:2px solid #bfdbfe;
+  border-color:var(--primary);
+}
+.table-wrap{
+  overflow-x:auto;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:700px;
+}
+th,td{
+  padding:12px 10px;
+  border-bottom:1px solid var(--line);
+  text-align:left;
+  vertical-align:middle;
+}
+th{
+  background:#f9fafb;
+  font-size:13px;
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  border-radius:999px;
+  padding:5px 9px;
+  font-size:12px;
+  font-weight:800;
+}
+.badge-pass{
+  background:#dcfce7;
+  color:#166534;
+}
+.badge-fail{
+  background:#fee2e2;
+  color:#991b1b;
+}
+.badge-na{
+  background:#e5e7eb;
+  color:#374151;
+}
+.badge-open{
+  background:#fee2e2;
+  color:#991b1b;
+}
+.badge-closed{
+  background:#dcfce7;
+  color:#166534;
+}
+.badge-service{
+  background:#ffedd5;
+  color:#9a3412;
+}
+.check-section{
+  margin-bottom:18px;
+}
+.check-section h3{
+  margin:0;
+  padding:13px 15px;
+  background:#111827;
+  color:white;
+  border-radius:10px 10px 0 0;
+}
+.check-item{
+  border:1px solid var(--line);
+  border-top:0;
+  padding:14px;
+  background:white;
+}
+.check-item-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+.check-question{
+  font-weight:650;
+  flex:1;
+}
+.check-buttons{
+  display:flex;
+  gap:6px;
+}
+.check-btn{
+  border:1px solid #d1d5db;
+  background:white;
+  border-radius:8px;
+  padding:7px 11px;
+  font-size:12px;
+  font-weight:800;
+}
+.check-btn.selected.pass{
+  background:#dcfce7;
+  color:#166534;
+  border-color:#86efac;
+}
+.check-btn.selected.fail{
+  background:#fee2e2;
+  color:#991b1b;
+  border-color:#fca5a5;
+}
+.check-btn.selected.na{
+  background:#e5e7eb;
+  color:#374151;
+  border-color:#9ca3af;
+}
+.failure-input{
+  display:none;
+  margin-top:9px;
+}
+.failure-input.show{
+  display:block;
+}
+.empty{
+  text-align:center;
+  padding:35px 15px;
+  color:var(--muted);
+}
+.modal-backdrop{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:100;
+  padding:15px;
+  overflow:auto;
+}
+.modal-backdrop.show{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.modal{
+  background:white;
+  width:min(750px,100%);
+  max-height:95vh;
+  overflow:auto;
+  border-radius:17px;
+  box-shadow:0 20px 50px rgba(0,0,0,.3);
+}
+.modal-header{
+  padding:18px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  position:sticky;
+  top:0;
+  background:white;
+  z-index:2;
+}
+.modal-header h3{
+  margin:0;
+}
+.modal-body{
+  padding:18px;
+}
+.close{
+  border:0;
+  background:#f3f4f6;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  font-size:20px;
+}
+.signature{
+  border:2px dashed #cbd5e1;
+  border-radius:10px;
+  min-height:100px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#94a3b8;
+  margin-bottom:10px;
+}
+.notice{
+  padding:13px 15px;
+  border-radius:10px;
+  margin-bottom:15px;
+  font-size:14px;
+}
+.notice-danger{
+  background:#fee2e2;
+  color:#991b1b;
+}
+.notice-warning{
+  background:#ffedd5;
+  color:#9a3412;
+}
+.notice-success{
+  background:#dcfce7;
+  color:#166534;
+}
+.fleet-card{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.fleet-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.forklift-id{
+  font-size:19px;
+  font-weight:800;
+}
+.progress{
+  height:8px;
+  background:#e5e7eb;
+  border-radius:99px;
+  overflow:hidden;
+}
+.progress > div{
+  height:100%;
+  background:var(--green);
+}
+.detail-list{
+  display:grid;
+  gap:8px;
+}
+.detail-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid #f3f4f6;
+  padding:7px 0;
+}
+.detail-row span:first-child{
+  color:var(--muted);
+}
+.mobile-menu{
+  display:none;
+}
+.toast{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  background:#111827;
+  color:white;
+  padding:13px 16px;
+  border-radius:10px;
+  z-index:300;
+  box-shadow:var(--shadow);
+  transform:translateY(120px);
+  transition:.25s;
+}
+.toast.show{
+  transform:translateY(0);
+}
+.record-card{
+  margin-bottom:12px;
+}
+.record-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:15px;
+}
+.record-meta{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:4px;
+}
+.fault-item{
+  border:1px solid #fecaca;
+  background:#fffafa;
+  border-radius:11px;
+  padding:14px;
+  margin-bottom:10px;
+}
+.fault-item.closed{
+  border-color:#bbf7d0;
+  background:#fafffb;
+}
+@media(max-width:850px){
+  .sidebar{
+    position:fixed;
+    top:79px;
+    bottom:0;
+    left:-250px;
+    z-index:50;
+    transition:.25s;
+    box-shadow:5px 0 20px rgba(0,0,0,.15);
   }
-
-  .form-grid {
-    grid-template-columns: 1fr;
+  .sidebar.open{
+    left:0;
   }
-
-  .field.full {
-    grid-column: auto;
+  .mobile-menu{
+    display:block;
+    border:0;
+    background:#374151;
+    color:white;
+    border-radius:8px;
+    padding:8px 10px;
+    font-size:18px;
   }
-
-  .check-top {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
-@media (max-width: 430px) {
-  main {
-    padding: 13px 10px 40px;
-  }
-
-  .hero {
-    padding: 20px;
-  }
-
-  .hero h2 {
-    font-size: 23px;
-  }
-
-  .grid {
-    gap: 8px;
-  }
-
-  .stat {
-    padding: 13px;
-  }
-
-  .stat-number {
-    font-size: 24px;
+  .grid-4{
+    grid-template-columns:repeat(2,1fr);
   }
 }
-
-@media print {
-  header,
-  .nav,
-  .no-print,
-  footer {
-    display: none !important;
+@media(max-width:600px){
+  .header{
+    padding:13px 12px;
   }
-
-  body {
-    background: white;
+  .header-inner{
+    gap:8px;
   }
-
-  main {
-    max-width: none;
+  .logo h1{
+    font-size:17px;
   }
-
-  .card {
-    box-shadow: none;
+  .logo small{
+    font-size:11px;
+  }
+  .main{
+    padding:14px;
+  }
+  .grid-4,.grid-3,.grid-2,.form-grid{
+    grid-template-columns:1fr;
+  }
+  .page-title h2{
+    font-size:23px;
+  }
+  .check-item-top{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .check-buttons{
+    width:100%;
+  }
+  .check-btn{
+    flex:1;
+  }
+  .actions .btn{
+    flex:1;
+  }
+}
+@media print{
+  .header,.sidebar,.actions,.no-print{
+    display:none!important;
+  }
+  .main{
+    padding:0;
+  }
+  .page{
+    display:none!important;
+  }
+  #page-record-detail{
+    display:block!important;
+  }
+  body{
+    background:white;
+  }
+  .card{
+    box-shadow:none;
   }
 }
 </style>
@@ -536,435 +626,823 @@ footer {
 
 <body>
 
-<header>
+<div class="app">
+
+<header class="header">
   <div class="header-inner">
     <div class="logo">
+      <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
       <div class="logo-icon">🚜</div>
       <div>
         <h1>Forklift Check</h1>
-        <p>Pre-start inspection & records</p>
+        <small><span class="status-dot"></span>Inspection & Maintenance</small>
       </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" onclick="showPage('new-inspection')">
+        + New Check
+      </button>
     </div>
   </div>
 </header>
 
-<main>
+<div class="layout">
 
-  <div class="nav no-print">
-    <button class="active" onclick="showPage('dashboard', this)">Dashboard</button>
-    <button onclick="showPage('inspection', this)">New Check</button>
-    <button onclick="showPage('records', this)">Records</button>
-    <button onclick="showPage('faults', this)">Faults</button>
-    <button onclick="showPage('fleet', this)">Fleet</button>
-  </div>
+<aside class="sidebar" id="sidebar">
+  <button class="nav-btn active" data-page="dashboard" onclick="showPage('dashboard')">📊 Dashboard</button>
+  <button class="nav-btn" data-page="new-inspection" onclick="showPage('new-inspection')">✅ New Inspection</button>
+  <button class="nav-btn" data-page="records" onclick="showPage('records')">📋 Inspection Records</button>
+  <button class="nav-btn" data-page="faults" onclick="showPage('faults')">🔧 Faults & Repairs</button>
+  <button class="nav-btn" data-page="fleet" onclick="showPage('fleet')">🚜 Fleet</button>
+  <button class="nav-btn" data-page="settings" onclick="showPage('settings')">⚙️ Settings</button>
+</aside>
 
-  <!-- DASHBOARD -->
-  <section id="dashboard" class="page active">
+<main class="main">
 
-    <div class="hero">
-      <h2>Forklift Pre-Start</h2>
-      <p>Complete the inspection before operating the forklift.</p>
-      <button class="primary-btn" onclick="openNewInspection()">
-        Start Inspection
-      </button>
-    </div>
+<!-- DASHBOARD -->
 
-    <div class="grid">
-      <div class="stat">
-        <div class="stat-number" id="statTotal">0</div>
-        <div class="stat-label">Total Checks</div>
-      </div>
+<section id="page-dashboard" class="page active">
 
-      <div class="stat">
-        <div class="stat-number" id="statToday">0</div>
-        <div class="stat-label">Checks Today</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-number" id="statPassed">0</div>
-        <div class="stat-label">Passed</div>
-      </div>
-
-      <div class="stat">
-        <div class="stat-number" id="statFailed">0</div>
-        <div class="stat-label">Failed</div>
-      </div>
-    </div>
-
-    <div id="dashboardAlerts" style="margin-top:16px;"></div>
-
-    <div class="card">
-      <h3>Recent Inspections</h3>
-      <div id="recentRecords"></div>
-    </div>
-
-  </section>
-
-  <!-- INSPECTION -->
-  <section id="inspection" class="page">
-
-    <div class="card">
-      <h2>New Forklift Inspection</h2>
-
-      <div class="form-grid">
-
-        <div class="field">
-          <label>Forklift / Asset ID *</label>
-          <input id="assetId" placeholder="e.g. FL-001">
-        </div>
-
-        <div class="field">
-          <label>Make / Model</label>
-          <input id="assetModel" placeholder="e.g. Toyota 8FG25">
-        </div>
-
-        <div class="field">
-          <label>Hour Meter</label>
-          <input id="hourMeter" type="number" min="0" placeholder="e.g. 4821">
-        </div>
-
-        <div class="field">
-          <label>Operator *</label>
-          <input id="operator" placeholder="Operator name">
-        </div>
-
-        <div class="field">
-          <label>Location</label>
-          <input id="location" placeholder="Workshop / site">
-        </div>
-
-        <div class="field">
-          <label>Shift</label>
-          <select id="shift">
-            <option>Day</option>
-            <option>Afternoon</option>
-            <option>Night</option>
-          </select>
-        </div>
-
-      </div>
-    </div>
-
-    <div id="checklistContainer"></div>
-
-    <div class="card">
-      <h3>Overall Comments</h3>
-      <div class="field">
-        <textarea id="overallComments" placeholder="Additional comments..."></textarea>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>Operator Declaration</h3>
-      <p style="color:#6b7280;font-size:14px;">
-        I confirm that I have completed this pre-start inspection and reported
-        any identified defects.
-      </p>
-
-      <div class="field">
-        <label>Operator Sign-off</label>
-        <input id="signature" placeholder="Type full name to sign">
-      </div>
-
-      <button class="primary-btn" onclick="saveInspection()">
-        Complete Inspection
-      </button>
-    </div>
-
-  </section>
-
-  <!-- RECORDS -->
-  <section id="records" class="page">
-
-    <div class="card">
-      <div class="section-title">
-        <h2>Inspection Records</h2>
-        <button class="secondary-btn no-print" onclick="exportCSV()">
-          Export CSV
-        </button>
-      </div>
-
-      <div class="form-grid no-print">
-        <div class="field">
-          <label>Search</label>
-          <input id="recordSearch" oninput="renderRecords()" placeholder="Search asset/operator...">
-        </div>
-
-        <div class="field">
-          <label>Status</label>
-          <select id="recordFilter" onchange="renderRecords()">
-            <option value="all">All</option>
-            <option value="PASS">Passed</option>
-            <option value="FAIL">Failed</option>
-          </select>
-        </div>
-      </div>
-
-      <div id="recordsList" style="margin-top:15px;"></div>
-    </div>
-
-  </section>
-
-  <!-- FAULTS -->
-  <section id="faults" class="page">
-
-    <div class="card">
-      <h2>Reported Faults</h2>
-      <p style="color:#6b7280;">
-        Faults identified during forklift inspections.
-      </p>
-
-      <div id="faultsList"></div>
-    </div>
-
-  </section>
-
-  <!-- FLEET -->
-  <section id="fleet" class="page">
-
-    <div class="card">
-      <h2>Fleet</h2>
-      <p style="color:#6b7280;">
-        Forklifts are automatically added when an inspection is completed.
-      </p>
-
-      <div id="fleetList"></div>
-    </div>
-
-  </section>
-
-</main>
-
-<footer>
-  Forklift Check • Local records version
-</footer>
-
-<!-- RECORD MODAL -->
-<div id="recordModal" class="modal">
-  <div class="modal-content">
-    <div class="modal-head">
-      <h2>Inspection Record</h2>
-      <button class="close" onclick="closeModal()">×</button>
-    </div>
-
-    <div id="recordDetails"></div>
-
-    <div class="record-actions no-print">
-      <button class="secondary-btn" onclick="window.print()">Print / Save PDF</button>
-      <button class="danger-btn" onclick="deleteCurrentRecord()">Delete Record</button>
-    </div>
-  </div>
+<div class="page-title">
+  <h2>Dashboard</h2>
+  <p>Forklift inspection and maintenance overview.</p>
 </div>
 
+<div class="grid grid-4">
+
+<div class="card stat">
+  <div>
+    <div class="stat-number blue" id="stat-forklifts">0</div>
+    <div class="stat-label">Forklifts</div>
+  </div>
+  <div class="stat-icon">🚜</div>
+</div>
+
+<div class="card stat">
+  <div>
+    <div class="stat-number green" id="stat-inspections">0</div>
+    <div class="stat-label">Inspections</div>
+  </div>
+  <div class="stat-icon">✅</div>
+</div>
+
+<div class="card stat">
+  <div>
+    <div class="stat-number red" id="stat-open">0</div>
+    <div class="stat-label">Open Faults</div>
+  </div>
+  <div class="stat-icon">⚠️</div>
+</div>
+
+<div class="card stat">
+  <div>
+    <div class="stat-number green" id="stat-closed">0</div>
+    <div class="stat-label">Repairs Closed</div>
+  </div>
+  <div class="stat-icon">🔧</div>
+</div>
+
+</div>
+
+<br>
+
+<div class="grid grid-2">
+
+<div class="card">
+  <div class="section-header">
+    <h3>Fleet Status</h3>
+    <button class="btn btn-secondary" onclick="showPage('fleet')">View Fleet</button>
+  </div>
+  <div id="dashboard-fleet"></div>
+</div>
+
+<div class="card">
+  <div class="section-header">
+    <h3>Recent Inspections</h3>
+    <button class="btn btn-secondary" onclick="showPage('records')">View All</button>
+  </div>
+  <div id="dashboard-inspections"></div>
+</div>
+
+</div>
+
+<br>
+
+<div class="card">
+  <div class="section-header">
+    <h3>Open Defects</h3>
+    <button class="btn btn-danger" onclick="showPage('faults')">Manage Faults</button>
+  </div>
+  <div id="dashboard-faults"></div>
+</div>
+
+</section>
+
+
+<!-- NEW INSPECTION -->
+
+<section id="page-new-inspection" class="page">
+
+<div class="page-title">
+  <h2>New Forklift Inspection</h2>
+  <p>Complete the pre-start inspection before operating the forklift.</p>
+</div>
+
+<div class="card">
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Forklift</label>
+<select id="inspection-forklift"></select>
+</div>
+
+<div class="form-group">
+<label>Operator Name</label>
+<input id="inspection-operator" placeholder="Enter operator name">
+</div>
+
+<div class="form-group">
+<label>Location</label>
+<input id="inspection-location" placeholder="Work area / site">
+</div>
+
+<div class="form-group">
+<label>Shift</label>
+<select id="inspection-shift">
+<option value="Day">Day</option>
+<option value="Afternoon">Afternoon</option>
+<option value="Night">Night</option>
+</select>
+</div>
+
+<div class="form-group">
+<label>Hour Meter</label>
+<input id="inspection-hours" type="number" placeholder="Hour meter reading">
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div id="checklist-container"></div>
+
+<div class="card">
+
+<h3>Inspection Summary</h3>
+
+<br>
+
+<div class="form-group">
+<label>Additional Comments</label>
+<textarea id="inspection-comments" placeholder="Enter any additional observations..."></textarea>
+</div>
+
+<br>
+
+<div class="form-group">
+<label>Operator Sign-Off</label>
+<input id="inspection-signature" placeholder="Type full name as electronic sign-off">
+</div>
+
+<br>
+
+<div class="notice notice-warning">
+<strong>Safety declaration:</strong><br>
+I confirm that I have completed the forklift pre-start inspection and have reported any defects identified during the inspection.
+</div>
+
+<div class="actions">
+<button class="btn btn-secondary" onclick="resetInspection()">Clear</button>
+<button class="btn btn-primary" onclick="submitInspection()">Complete Inspection</button>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- RECORDS -->
+
+<section id="page-records" class="page">
+
+<div class="page-title">
+  <h2>Inspection Records</h2>
+  <p>Complete history of forklift inspections.</p>
+</div>
+
+<div class="card">
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Search</label>
+<input id="record-search" placeholder="Search forklift, operator or location..." oninput="renderRecords()">
+</div>
+
+<div class="form-group">
+<label>Filter</label>
+<select id="record-filter" onchange="renderRecords()">
+<option value="all">All Records</option>
+<option value="pass">Passed</option>
+<option value="fail">Failed / Defects</option>
+</select>
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<div id="records-list"></div>
+
+</section>
+
+
+<!-- FAULTS -->
+
+<section id="page-faults" class="page">
+
+<div class="page-title">
+  <h2>Faults & Repairs</h2>
+  <p>Track defects from discovery through repair and sign-off.</p>
+</div>
+
+<div class="grid grid-2">
+
+<div class="card">
+<h3>Open Defects</h3>
+<p style="color:var(--muted)">Forklifts with unresolved faults remain out of service.</p>
+<br>
+<div id="open-faults"></div>
+</div>
+
+<div class="card">
+<h3>Completed Repairs</h3>
+<p style="color:var(--muted)">Repairs that have been completed and signed off.</p>
+<br>
+<div id="closed-faults"></div>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- FLEET -->
+
+<section id="page-fleet" class="page">
+
+<div class="page-title">
+  <h2>Fleet</h2>
+  <p>Forklift fleet and current service status.</p>
+</div>
+
+<div class="card">
+<div class="section-header">
+<h3>Forklift Fleet</h3>
+<button class="btn btn-primary" onclick="openForkliftModal()">+ Add Forklift</button>
+</div>
+
+<div id="fleet-list" class="grid grid-3"></div>
+
+</div>
+
+</section>
+
+
+<!-- SETTINGS -->
+
+<section id="page-settings" class="page">
+
+<div class="page-title">
+<h2>Settings</h2>
+<p>Manage your local Forklift Check records.</p>
+</div>
+
+<div class="grid grid-2">
+
+<div class="card">
+<h3>Export Records</h3>
+<p style="color:var(--muted)">
+Download your inspection and maintenance records as CSV files.
+</p>
+<br>
+<div class="actions">
+<button class="btn btn-primary" onclick="exportInspections()">Export Inspections</button>
+<button class="btn btn-secondary" onclick="exportFaults()">Export Faults</button>
+</div>
+</div>
+
+<div class="card">
+<h3>Data Storage</h3>
+<p>
+Records are currently stored locally in this browser on this device.
+</p>
+
+<div class="notice notice-warning">
+For shared workplace records across multiple phones/computers, a cloud database should be connected later.
+</div>
+
+<button class="btn btn-danger" onclick="confirmClearData()">Delete All Local Data</button>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- RECORD DETAIL -->
+
+<section id="page-record-detail" class="page">
+
+<div class="page-title">
+<div class="actions no-print">
+<button class="btn btn-secondary" onclick="showPage('records')">← Back</button>
+<button class="btn btn-primary" onclick="window.print()">Print / Save PDF</button>
+</div>
+<br>
+<h2>Inspection Report</h2>
+<p id="record-detail-subtitle"></p>
+</div>
+
+<div id="record-detail"></div>
+
+</section>
+
+</main>
+</div>
+</div>
+
+
+<!-- FAULT REPAIR MODAL -->
+
+<div class="modal-backdrop" id="repair-modal">
+
+<div class="modal">
+
+<div class="modal-header">
+<h3>Record Repair & Sign-Off</h3>
+<button class="close" onclick="closeModal('repair-modal')">×</button>
+</div>
+
+<div class="modal-body">
+
+<div id="repair-fault-summary" class="notice notice-danger"></div>
+
+<input type="hidden" id="repair-fault-id">
+
+<div class="form-grid">
+
+<div class="form-group full">
+<label>Repair / Corrective Action Carried Out *</label>
+<textarea id="repair-action" placeholder="Describe exactly what was repaired or corrected..."></textarea>
+</div>
+
+<div class="form-group full">
+<label>Parts / Materials Used</label>
+<textarea id="repair-parts" placeholder="List parts, seals, hoses, oils, fasteners etc."></textarea>
+</div>
+
+<div class="form-group">
+<label>Repaired By *</label>
+<input id="repair-person" placeholder="Name">
+</div>
+
+<div class="form-group">
+<label>Repair Date *</label>
+<input id="repair-date" type="date">
+</div>
+
+<div class="form-group full">
+<label>Repair Verification / Test Results *</label>
+<textarea id="repair-test" placeholder="Describe testing carried out and results..."></textarea>
+</div>
+
+<div class="form-group full">
+<label>Maintenance Sign-Off *</label>
+<input id="repair-signature" placeholder="Type full name">
+</div>
+
+</div>
+
+<br>
+
+<div class="notice notice-warning">
+<strong>Maintenance declaration:</strong><br>
+I confirm that the corrective action has been completed and the forklift/component has been checked and is suitable to return to service.
+</div>
+
+<div class="actions">
+<button class="btn btn-secondary" onclick="closeModal('repair-modal')">Cancel</button>
+<button class="btn btn-success" onclick="completeRepair()">Complete Repair & Close Fault</button>
+</div>
+
+</div>
+</div>
+</div>
+
+
+<!-- FORKLIFT MODAL -->
+
+<div class="modal-backdrop" id="forklift-modal">
+
+<div class="modal">
+
+<div class="modal-header">
+<h3>Add Forklift</h3>
+<button class="close" onclick="closeModal('forklift-modal')">×</button>
+</div>
+
+<div class="modal-body">
+
+<div class="form-grid">
+
+<div class="form-group">
+<label>Forklift ID *</label>
+<input id="new-forklift-id" placeholder="e.g. FL-001">
+</div>
+
+<div class="form-group">
+<label>Make / Model</label>
+<input id="new-forklift-model" placeholder="e.g. Toyota 8FG25">
+</div>
+
+<div class="form-group">
+<label>Serial Number</label>
+<input id="new-forklift-serial" placeholder="Serial number">
+</div>
+
+<div class="form-group">
+<label>Location</label>
+<input id="new-forklift-location" placeholder="Workshop / Warehouse">
+</div>
+
+</div>
+
+<br>
+
+<div class="actions">
+<button class="btn btn-secondary" onclick="closeModal('forklift-modal')">Cancel</button>
+<button class="btn btn-primary" onclick="addForklift()">Add Forklift</button>
+</div>
+
+</div>
+</div>
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+
 <script>
-const checklist = {
 
-  "Mechanical": [
-    "Forks",
-    "Fork locking pins",
-    "Mast",
-    "Chains",
-    "Carriage",
-    "Hydraulic hoses",
-    "Hydraulic cylinders",
-    "Hydraulic leaks",
-    "Tyres / wheels",
-    "Wheel nuts",
-    "Steering",
-    "Service brakes",
-    "Parking brake"
-  ],
+/* ============================================================
+   FORKLIFT CHECK
+   Local storage application
+   ============================================================ */
 
-  "Electrical": [
-    "Battery",
-    "Battery leads",
-    "Battery connection",
-    "Warning lights",
-    "Gauges",
-    "Horn",
-    "Reverse alarm",
-    "Work lights",
-    "Beacon"
-  ],
-
-  "Safety": [
-    "Seat belt",
-    "Seat",
-    "Overhead guard",
-    "Load backrest",
-    "Operator restraint",
-    "Safety decals",
-    "Mirrors",
-    "Visibility"
-  ],
-
-  "Operation": [
-    "Start-up",
-    "Steering operation",
-    "Service brake operation",
-    "Parking brake operation",
-    "Lift operation",
-    "Lower operation",
-    "Tilt forward",
-    "Tilt backward",
-    "Side shift",
-    "Attachment operation"
-  ]
+const STORAGE_KEYS = {
+  forklifts: "forkliftCheck_forklifts",
+  inspections: "forkliftCheck_inspections",
+  faults: "forkliftCheck_faults"
 };
 
-let inspections = JSON.parse(localStorage.getItem("forkliftInspections") || "[]");
-let currentRecordId = null;
 
-function saveData() {
-  localStorage.setItem("forkliftInspections", JSON.stringify(inspections));
+/* ============================================================
+   CHECKLIST
+   ============================================================ */
+
+const checklist = [
+
+{
+section:"Mechanical",
+items:[
+"Forks inspected for cracks, bends, excessive wear or damage",
+"Mast and lift chains inspected",
+"Hydraulic cylinders inspected for leaks or damage",
+"Hydraulic hoses and fittings inspected for leaks or damage",
+"Hydraulic oil level checked",
+"Engine oil level checked",
+"Coolant level checked",
+"Drive belt / belts inspected",
+"Tyres inspected for damage and excessive wear",
+"Wheel nuts visually checked",
+"Steering system checked",
+"Braking system checked",
+"Parking brake checked",
+"Transmission / drive system checked for abnormal noise or operation"
+]
+},
+
+{
+section:"Electrical",
+items:[
+"Battery condition visually inspected",
+"Battery connections visually inspected",
+"Battery leads / cables visually inspected",
+"Warning lights checked",
+"Instrument panel checked",
+"Reverse alarm checked",
+"Lights visually checked",
+"Electrical components visually inspected for obvious damage"
+]
+},
+
+{
+section:"Safety",
+items:[
+"Seat belt inspected and functioning",
+"Operator seat condition checked",
+"Overhead guard inspected",
+"Load backrest inspected",
+"Safety decals / warning labels visible",
+"Fire extinguisher condition checked where fitted",
+"Emergency equipment accessible where required",
+"Forklift identification / capacity plate readable"
+]
+},
+
+{
+section:"Operation",
+items:[
+"Forklift starts normally",
+"Engine / motor operates normally",
+"Steering operates correctly",
+"Service brake operates correctly",
+"Parking brake operates correctly",
+"Forward and reverse operate correctly",
+"Lift function operates correctly",
+"Lower function operates correctly",
+"Tilt function operates correctly",
+"Attachment operates correctly where fitted",
+"Reverse alarm operates correctly",
+"Horn operates correctly"
+]
 }
 
-function todayString() {
-  return new Date().toISOString().split("T")[0];
+];
+
+
+/* ============================================================
+   DATA
+   ============================================================ */
+
+function getData(key){
+  try{
+    return JSON.parse(localStorage.getItem(key)) || [];
+  }catch(e){
+    return [];
+  }
 }
 
-function formatDate(dateString) {
-  const d = new Date(dateString);
-  return d.toLocaleString("en-AU", {
-    dateStyle: "medium",
-    timeStyle: "short"
-  });
+function saveData(key,data){
+  localStorage.setItem(key,JSON.stringify(data));
 }
 
-function showPage(pageId, button) {
+function getForklifts(){
+  return getData(STORAGE_KEYS.forklifts);
+}
 
-  document.querySelectorAll(".page").forEach(p => {
+function getInspections(){
+  return getData(STORAGE_KEYS.inspections);
+}
+
+function getFaults(){
+  return getData(STORAGE_KEYS.faults);
+}
+
+
+/* ============================================================
+   INITIALISE
+   ============================================================ */
+
+function initialise(){
+
+  if(getForklifts().length === 0){
+
+    saveData(STORAGE_KEYS.forklifts,[
+
+      {
+        id:crypto.randomUUID(),
+        assetId:"FL-001",
+        model:"Example Forklift",
+        serial:"",
+        location:"Workshop",
+        createdAt:new Date().toISOString()
+      }
+
+    ]);
+
+  }
+
+  renderAll();
+  buildChecklist();
+  populateForkliftSelect();
+
+}
+
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+
+function showPage(page){
+
+  document.querySelectorAll(".page").forEach(p=>{
     p.classList.remove("active");
   });
 
-  document.getElementById(pageId).classList.add("active");
+  const target=document.getElementById("page-"+page);
 
-  document.querySelectorAll(".nav button").forEach(b => {
-    b.classList.remove("active");
-  });
-
-  if (button) {
-    button.classList.add("active");
+  if(target){
+    target.classList.add("active");
   }
 
-  if (pageId === "dashboard") renderDashboard();
-  if (pageId === "records") renderRecords();
-  if (pageId === "faults") renderFaults();
-  if (pageId === "fleet") renderFleet();
+  document.querySelectorAll(".nav-btn").forEach(btn=>{
+    btn.classList.toggle(
+      "active",
+      btn.dataset.page===page
+    );
+  });
 
-  window.scrollTo({top:0, behavior:"smooth"});
+  document.getElementById("sidebar").classList.remove("open");
+
+  renderAll();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 }
 
-function openNewInspection() {
-  showPage("inspection", document.querySelectorAll(".nav button")[1]);
-  resetInspection();
+function toggleSidebar(){
+  document.getElementById("sidebar").classList.toggle("open");
 }
 
-function buildChecklist() {
 
-  const container = document.getElementById("checklistContainer");
-  container.innerHTML = "";
+/* ============================================================
+   CHECKLIST UI
+   ============================================================ */
 
-  Object.entries(checklist).forEach(([section, items]) => {
+function buildChecklist(){
 
-    const card = document.createElement("div");
-    card.className = "card";
+  const container=document.getElementById("checklist-container");
 
-    card.innerHTML = `
-      <div class="section-title">
-        <h3>${section}</h3>
-      </div>
-    `;
+  container.innerHTML="";
 
-    items.forEach((item, index) => {
+  checklist.forEach((section,sectionIndex)=>{
 
-      const id = "check_" +
-        section.replace(/\W/g,"_") +
-        "_" +
-        index;
+    const wrapper=document.createElement("div");
 
-      const div = document.createElement("div");
-      div.className = "check-item";
+    wrapper.className="card check-section";
 
-      div.innerHTML = `
-        <div class="check-top">
-          <div class="check-name">${item}</div>
+    let html=`<h3>${escapeHtml(section.section)}</h3>`;
+
+    section.items.forEach((item,itemIndex)=>{
+
+      const id=`check-${sectionIndex}-${itemIndex}`;
+
+      html+=`
+
+      <div class="check-item">
+
+        <div class="check-item-top">
+
+          <div class="check-question">
+            ${itemIndex+1}. ${escapeHtml(item)}
+          </div>
 
           <div class="check-buttons">
-            <button class="pass"
-              onclick="setCheck('${id}','PASS',this)">
+
+            <button
+              type="button"
+              class="check-btn"
+              id="${id}-pass"
+              onclick="setCheck('${id}','PASS')">
               PASS
             </button>
 
-            <button class="fail"
-              onclick="setCheck('${id}','FAIL',this)">
+            <button
+              type="button"
+              class="check-btn"
+              id="${id}-fail"
+              onclick="setCheck('${id}','FAIL')">
               FAIL
             </button>
 
-            <button class="na"
-              onclick="setCheck('${id}','N/A',this)">
+            <button
+              type="button"
+              class="check-btn"
+              id="${id}-na"
+              onclick="setCheck('${id}','N/A')">
               N/A
             </button>
+
           </div>
+
         </div>
 
-        <div class="fault-box" id="${id}_fault">
-          <textarea
-            id="${id}_text"
-            placeholder="Describe the fault / defect..."></textarea>
+        <div
+          class="failure-input"
+          id="${id}-failure">
+
+          <input
+            id="${id}-description"
+            placeholder="Describe the defect / problem..."
+          >
+
         </div>
 
-        <input type="hidden" id="${id}" value="">
+      </div>
       `;
-
-      card.appendChild(div);
     });
 
-    container.appendChild(card);
+    wrapper.innerHTML=html;
+
+    container.appendChild(wrapper);
   });
 }
 
-function setCheck(id, value, button) {
 
-  document.getElementById(id).value = value;
+function setCheck(id,result){
 
-  const buttons = button.parentElement.querySelectorAll("button");
+  ["PASS","FAIL","N/A"].forEach(type=>{
 
-  buttons.forEach(b => b.classList.remove("selected"));
+    const button=document.getElementById(
+      `${id}-${type==="N/A"?"na":type.toLowerCase()}`
+    );
 
-  button.classList.add("selected");
+    if(button){
+      button.classList.remove("selected","pass","fail","na");
+    }
 
-  const faultBox = document.getElementById(id + "_fault");
+  });
 
-  if (value === "FAIL") {
-    faultBox.classList.add("show");
-  } else {
-    faultBox.classList.remove("show");
+  const selected=document.getElementById(
+    `${id}-${result==="N/A"?"na":result.toLowerCase()}`
+  );
+
+  if(selected){
+
+    selected.classList.add(
+      "selected",
+      result==="PASS"?"pass":
+      result==="FAIL"?"fail":"na"
+    );
+
+  }
+
+  const failure=document.getElementById(`${id}-failure`);
+
+  if(failure){
+    failure.classList.toggle("show",result==="FAIL");
   }
 }
 
-function collectChecks() {
 
-  const results = [];
+function collectChecklistResults(){
 
-  Object.entries(checklist).forEach(([section, items]) => {
+  const results=[];
 
-    items.forEach((item, index) => {
+  checklist.forEach((section,sectionIndex)=>{
 
-      const id = "check_" +
-        section.replace(/\W/g,"_") +
-        "_" +
-        index;
+    section.items.forEach((item,itemIndex)=>{
 
-      const result = document.getElementById(id).value || "";
+      const id=`check-${sectionIndex}-${itemIndex}`;
 
-      const fault = document.getElementById(id + "_text").value.trim();
+      let result="";
+
+      if(
+        document.getElementById(`${id}-pass`)?.classList.contains("selected")
+      ){
+        result="PASS";
+      }
+
+      if(
+        document.getElementById(`${id}-fail`)?.classList.contains("selected")
+      ){
+        result="FAIL";
+      }
+
+      if(
+        document.getElementById(`${id}-na`)?.classList.contains("selected")
+      ){
+        result="N/A";
+      }
+
+      const description=
+        document.getElementById(`${id}-description`)?.value.trim() || "";
 
       results.push({
-        section,
+        section:section.section,
         item,
         result,
-        fault
+        description
       });
 
     });
@@ -974,602 +1452,1621 @@ function collectChecks() {
   return results;
 }
 
-function saveInspection() {
 
-  const assetId = document.getElementById("assetId").value.trim();
-  const operator = document.getElementById("operator").value.trim();
-  const signature = document.getElementById("signature").value.trim();
+/* ============================================================
+   SUBMIT INSPECTION
+   ============================================================ */
 
-  if (!assetId) {
-    alert("Please enter the forklift / asset ID.");
+function submitInspection(){
+
+  const forkliftId=
+    document.getElementById("inspection-forklift").value;
+
+  const operator=
+    document.getElementById("inspection-operator").value.trim();
+
+  const location=
+    document.getElementById("inspection-location").value.trim();
+
+  const signature=
+    document.getElementById("inspection-signature").value.trim();
+
+  if(!forkliftId){
+    toast("Please select a forklift.");
     return;
   }
 
-  if (!operator) {
-    alert("Please enter the operator name.");
+  if(!operator){
+    toast("Please enter the operator name.");
     return;
   }
 
-  if (!signature) {
-    alert("Please complete the operator sign-off.");
+  if(!signature){
+    toast("Operator sign-off is required.");
     return;
   }
 
-  const checks = collectChecks();
+  const results=collectChecklistResults();
 
-  const incomplete = checks.filter(c => !c.result);
+  const incomplete=results.filter(x=>!x.result);
 
-  if (incomplete.length > 0) {
-    alert(
-      "Please complete every inspection item before submitting.\n\n" +
-      "Remaining: " + incomplete.length
+  if(incomplete.length){
+
+    toast(
+      `${incomplete.length} checklist item(s) have not been completed.`
     );
+
     return;
   }
 
-  const failed = checks.filter(c => c.result === "FAIL");
+  const failed=results.filter(x=>x.result==="FAIL");
 
-  const record = {
+  for(const item of failed){
 
-    id: Date.now().toString(),
+    if(!item.description){
 
-    date: new Date().toISOString(),
+      toast(
+        `Enter a defect description for: ${item.item}`
+      );
 
-    assetId,
+      return;
+    }
 
-    model: document.getElementById("assetModel").value.trim(),
+  }
 
-    hourMeter: document.getElementById("hourMeter").value,
+  const inspections=getInspections();
 
+  const inspection={
+    id:crypto.randomUUID(),
+    forkliftId,
     operator,
-
-    location: document.getElementById("location").value.trim(),
-
-    shift: document.getElementById("shift").value,
-
-    comments:
-      document.getElementById("overallComments").value.trim(),
-
+    location,
+    shift:document.getElementById("inspection-shift").value,
+    hourMeter:document.getElementById("inspection-hours").value,
+    comments:document.getElementById("inspection-comments").value.trim(),
     signature,
-
-    status: failed.length ? "FAIL" : "PASS",
-
-    checks,
-
-    faults: failed.map(f => ({
-      item: f.item,
-      section: f.section,
-      description: f.fault
-    }))
-
+    inspectedAt:new Date().toISOString(),
+    overallStatus:failed.length ? "FAIL" : "PASS",
+    results
   };
 
-  inspections.unshift(record);
+  inspections.unshift(inspection);
 
-  saveData();
+  saveData(STORAGE_KEYS.inspections,inspections);
 
-  alert(
-    record.status === "PASS"
-      ? "Inspection completed successfully."
-      : "Inspection recorded with FAILED items. Forklift requires attention."
+
+  /* Create faults automatically */
+
+  if(failed.length){
+
+    const faults=getFaults();
+
+    failed.forEach(item=>{
+
+      faults.unshift({
+
+        id:crypto.randomUUID(),
+
+        inspectionId:inspection.id,
+
+        forkliftId,
+
+        section:item.section,
+
+        item:item.item,
+
+        description:item.description,
+
+        reportedBy:operator,
+
+        reportedAt:inspection.inspectedAt,
+
+        status:"OPEN",
+
+        repairAction:"",
+        repairParts:"",
+        repairedBy:"",
+        repairDate:"",
+        repairSignature:"",
+        repairTest:"",
+        closedAt:""
+
+      });
+
+    });
+
+    saveData(STORAGE_KEYS.faults,faults);
+
+  }
+
+
+  toast(
+    failed.length
+      ? `Inspection saved. ${failed.length} fault(s) created.`
+      : "Inspection completed successfully."
   );
 
   resetInspection();
 
-  showPage(
-    "records",
-    document.querySelectorAll(".nav button")[2]
-  );
+  showPage("records");
+
 }
 
-function resetInspection() {
 
-  document.getElementById("assetId").value = "";
-  document.getElementById("assetModel").value = "";
-  document.getElementById("hourMeter").value = "";
-  document.getElementById("operator").value = "";
-  document.getElementById("location").value = "";
-  document.getElementById("shift").value = "Day";
-  document.getElementById("overallComments").value = "";
-  document.getElementById("signature").value = "";
+/* ============================================================
+   RESET INSPECTION
+   ============================================================ */
+
+function resetInspection(){
+
+  document.getElementById("inspection-operator").value="";
+  document.getElementById("inspection-location").value="";
+  document.getElementById("inspection-hours").value="";
+  document.getElementById("inspection-comments").value="";
+  document.getElementById("inspection-signature").value="";
 
   buildChecklist();
 }
 
-function renderDashboard() {
 
-  const total = inspections.length;
+/* ============================================================
+   RECORDS
+   ============================================================ */
 
-  const today = inspections.filter(
-    r => r.date.startsWith(todayString())
-  ).length;
+function renderRecords(){
 
-  const passed = inspections.filter(
-    r => r.status === "PASS"
-  ).length;
+  const container=document.getElementById("records-list");
 
-  const failed = inspections.filter(
-    r => r.status === "FAIL"
-  ).length;
+  if(!container)return;
 
-  document.getElementById("statTotal").textContent = total;
-  document.getElementById("statToday").textContent = today;
-  document.getElementById("statPassed").textContent = passed;
-  document.getElementById("statFailed").textContent = failed;
+  const inspections=getInspections();
+  const forklifts=getForklifts();
 
-  const alerts = document.getElementById("dashboardAlerts");
+  const search=
+    document.getElementById("record-search")?.value
+    .toLowerCase() || "";
 
-  const failedAssets = [
-    ...new Set(
-      inspections
-        .filter(r => r.status === "FAIL")
-        .map(r => r.assetId)
-    )
-  ];
+  const filter=
+    document.getElementById("record-filter")?.value || "all";
 
-  if (failedAssets.length) {
+  let records=inspections.filter(record=>{
 
-    alerts.innerHTML = `
-      <div class="alert danger">
-        <strong>⚠️ Attention required</strong><br>
-        ${failedAssets.length} forklift(s) have failed inspection checks:
-        ${failedAssets.join(", ")}
-      </div>
-    `;
+    const forklift=
+      forklifts.find(f=>f.id===record.forkliftId);
 
-  } else {
+    const searchable=[
+      forklift?.assetId || "",
+      forklift?.model || "",
+      record.operator,
+      record.location
+    ].join(" ").toLowerCase();
 
-    alerts.innerHTML = "";
+    const matchesSearch=searchable.includes(search);
 
-  }
-
-  const recent = inspections.slice(0,5);
-
-  if (!recent.length) {
-
-    document.getElementById("recentRecords").innerHTML =
-      `<div class="empty">No inspections recorded yet.</div>`;
-
-    return;
-  }
-
-  document.getElementById("recentRecords").innerHTML =
-    recent.map(recordCard).join("");
-}
-
-function recordCard(r) {
-
-  return `
-    <div class="record">
-
-      <div class="record-head">
-
-        <div>
-          <strong>${escapeHTML(r.assetId)}</strong>
-          ${r.model ? " — " + escapeHTML(r.model) : ""}
-          <br>
-          <small>
-            ${escapeHTML(r.operator)}
-            • ${formatDate(r.date)}
-          </small>
-        </div>
-
-        <span class="status ${r.status === "PASS" ? "pass" : "fail"}">
-          ${r.status}
-        </span>
-
-      </div>
-
-      <div class="record-actions">
-        <button
-          class="secondary-btn"
-          onclick="viewRecord('${r.id}')">
-          View
-        </button>
-      </div>
-
-    </div>
-  `;
-}
-
-function renderRecords() {
-
-  const search =
-    (document.getElementById("recordSearch")?.value || "")
-      .toLowerCase();
-
-  const filter =
-    document.getElementById("recordFilter")?.value || "all";
-
-  let list = inspections.filter(r => {
-
-    const matchesSearch =
-      !search ||
-      r.assetId.toLowerCase().includes(search) ||
-      r.operator.toLowerCase().includes(search) ||
-      (r.model || "").toLowerCase().includes(search);
-
-    const matchesFilter =
-      filter === "all" ||
-      r.status === filter;
+    const matchesFilter=
+      filter==="all" ||
+      (filter==="pass" && record.overallStatus==="PASS") ||
+      (filter==="fail" && record.overallStatus==="FAIL");
 
     return matchesSearch && matchesFilter;
 
   });
 
-  const container = document.getElementById("recordsList");
+  if(!records.length){
 
-  if (!list.length) {
-
-    container.innerHTML =
-      `<div class="empty">No matching records.</div>`;
-
-    return;
-  }
-
-  container.innerHTML = list.map(recordCard).join("");
-}
-
-function renderFaults() {
-
-  const faults = [];
-
-  inspections.forEach(record => {
-
-    record.faults.forEach(fault => {
-
-      faults.push({
-        ...fault,
-        recordId: record.id,
-        assetId: record.assetId,
-        operator: record.operator,
-        date: record.date
-      });
-
-    });
-
-  });
-
-  const container = document.getElementById("faultsList");
-
-  if (!faults.length) {
-
-    container.innerHTML =
-      `<div class="empty">No faults have been reported.</div>`;
+    container.innerHTML=`
+      <div class="card empty">
+        No inspection records found.
+      </div>
+    `;
 
     return;
   }
 
-  container.innerHTML = faults.map(f => `
+  container.innerHTML=records.map(record=>{
 
-    <div class="record">
+    const forklift=
+      forklifts.find(f=>f.id===record.forkliftId);
 
-      <div class="record-head">
+    const faults=
+      getFaults().filter(f=>f.inspectionId===record.id);
+
+    return `
+
+    <div class="card record-card">
+
+      <div class="record-header">
 
         <div>
-          <strong>⚠️ ${escapeHTML(f.assetId)}</strong>
-          <br>
-          <small>
-            ${escapeHTML(f.item)}
-            • ${formatDate(f.date)}
-          </small>
+
+          <strong>
+            ${escapeHtml(forklift?.assetId || "Unknown Forklift")}
+          </strong>
+
+          <div class="record-meta">
+            ${formatDate(record.inspectedAt)}
+            · ${escapeHtml(record.operator)}
+            · ${escapeHtml(record.location || "-")}
+          </div>
+
         </div>
 
-        <span class="status open">REPORTED</span>
+        <span class="badge ${
+          record.overallStatus==="PASS"
+          ?"badge-pass"
+          :"badge-fail"
+        }">
+          ${record.overallStatus}
+        </span>
 
       </div>
 
-      <p>
-        ${escapeHTML(f.description || "No description provided.")}
-      </p>
+      <br>
 
-      <small>
-        Reported by ${escapeHTML(f.operator)}
-      </small>
+      <div class="actions">
+
+        <button
+          class="btn btn-secondary"
+          onclick="viewRecord('${record.id}')">
+          View Report
+        </button>
+
+        ${
+          faults.length
+          ?
+          `<span class="badge badge-open">
+            ${faults.filter(f=>f.status==="OPEN").length} Open Fault(s)
+          </span>`
+          :""
+        }
+
+      </div>
 
     </div>
 
-  `).join("");
+    `;
+
+  }).join("");
+
 }
 
-function renderFleet() {
 
-  const assets = {};
+/* ============================================================
+   RECORD DETAIL
+   ============================================================ */
 
-  inspections.forEach(r => {
+function viewRecord(id){
 
-    if (!assets[r.assetId]) {
-      assets[r.assetId] = {
-        assetId: r.assetId,
-        model: r.model,
-        last: r
-      };
+  const record=
+    getInspections().find(r=>r.id===id);
+
+  if(!record)return;
+
+  const forklift=
+    getForklifts().find(f=>f.id===record.forkliftId);
+
+  const faults=
+    getFaults().filter(f=>f.inspectionId===id);
+
+  document.getElementById("record-detail-subtitle").textContent=
+    `${forklift?.assetId || "Forklift"} · ${formatDate(record.inspectedAt)}`;
+
+  let html=`
+
+  <div class="card">
+
+    <h3>Inspection Information</h3>
+
+    <br>
+
+    <div class="detail-list">
+
+      <div class="detail-row">
+        <span>Forklift</span>
+        <strong>${escapeHtml(forklift?.assetId || "-")}</strong>
+      </div>
+
+      <div class="detail-row">
+        <span>Make / Model</span>
+        <strong>${escapeHtml(forklift?.model || "-")}</strong>
+      </div>
+
+      <div class="detail-row">
+        <span>Operator</span>
+        <strong>${escapeHtml(record.operator)}</strong>
+      </div>
+
+      <div class="detail-row">
+        <span>Location</span>
+        <strong>${escapeHtml(record.location || "-")}</strong>
+      </div>
+
+      <div class="detail-row">
+        <span>Shift</span>
+        <strong>${escapeHtml(record.shift)}</strong>
+      </div>
+
+      <div class="detail-row">
+        <span>Hour Meter</span>
+        <strong>${escapeHtml(record.hourMeter || "-")}</strong>
+      </div>
+
+      <div class="detail-row">
+        <span>Overall Result</span>
+        <strong>
+          <span class="badge ${
+            record.overallStatus==="PASS"
+            ?"badge-pass"
+            :"badge-fail"
+          }">
+            ${record.overallStatus}
+          </span>
+        </strong>
+      </div>
+
+      <div class="detail-row">
+        <span>Operator Sign-Off</span>
+        <strong>${escapeHtml(record.signature)}</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+  <br>
+
+  <div class="card">
+
+    <h3>Checklist Results</h3>
+
+    <br>
+
+  `;
+
+  checklist.forEach(section=>{
+
+    html+=`<h4>${escapeHtml(section.section)}</h4>`;
+
+    const sectionResults=
+      record.results.filter(r=>r.section===section.section);
+
+    html+=`
+
+    <div class="table-wrap">
+
+    <table>
+
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Result</th>
+        <th>Defect / Comment</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+    ${sectionResults.map(item=>`
+
+      <tr>
+
+        <td>${escapeHtml(item.item)}</td>
+
+        <td>
+
+          <span class="badge ${
+            item.result==="PASS"
+            ?"badge-pass"
+            :item.result==="FAIL"
+            ?"badge-fail"
+            :"badge-na"
+          }">
+
+            ${escapeHtml(item.result)}
+
+          </span>
+
+        </td>
+
+        <td>${escapeHtml(item.description || "-")}</td>
+
+      </tr>
+
+    `).join("")}
+
+    </tbody>
+
+    </table>
+
+    </div>
+
+    <br>
+
+    `;
+
+  });
+
+  html+=`</div>`;
+
+
+  html+=`
+
+  <br>
+
+  <div class="card">
+
+    <h3>Maintenance Defects & Repairs</h3>
+
+    <br>
+
+  `;
+
+  if(!faults.length){
+
+    html+=`
+      <div class="empty">
+        No faults were created from this inspection.
+      </div>
+    `;
+
+  }else{
+
+    faults.forEach(fault=>{
+
+      html+=`
+
+      <div class="fault-item ${fault.status==="CLOSED"?"closed":""}">
+
+        <div class="section-header">
+
+          <div>
+
+            <strong>
+              ${escapeHtml(fault.item)}
+            </strong>
+
+            <div class="record-meta">
+              ${escapeHtml(fault.section)}
+            </div>
+
+          </div>
+
+          <span class="badge ${
+            fault.status==="OPEN"
+            ?"badge-open"
+            :"badge-closed"
+          }">
+            ${fault.status}
+          </span>
+
+        </div>
+
+        <p>
+          <strong>Defect:</strong>
+          ${escapeHtml(fault.description)}
+        </p>
+
+        <p>
+          <strong>Reported by:</strong>
+          ${escapeHtml(fault.reportedBy)}
+          · ${formatDate(fault.reportedAt)}
+        </p>
+
+        ${
+          fault.status==="CLOSED"
+
+          ?
+
+          `
+
+          <hr>
+
+          <p>
+            <strong>Repair / Corrective Action:</strong><br>
+            ${escapeHtml(fault.repairAction)}
+          </p>
+
+          <p>
+            <strong>Parts / Materials:</strong><br>
+            ${escapeHtml(fault.repairParts || "-")}
+          </p>
+
+          <p>
+            <strong>Repaired By:</strong>
+            ${escapeHtml(fault.repairedBy)}
+          </p>
+
+          <p>
+            <strong>Repair Date:</strong>
+            ${escapeHtml(fault.repairDate)}
+          </p>
+
+          <p>
+            <strong>Test / Verification:</strong><br>
+            ${escapeHtml(fault.repairTest)}
+          </p>
+
+          <p>
+            <strong>Maintenance Sign-Off:</strong>
+            ${escapeHtml(fault.repairSignature)}
+          </p>
+
+          <p>
+            <strong>Closed:</strong>
+            ${formatDate(fault.closedAt)}
+          </p>
+
+          `
+
+          :
+
+          `
+
+          <br>
+
+          <button
+            class="btn btn-primary no-print"
+            onclick="openRepairModal('${fault.id}')">
+            🔧 Record Repair & Sign Off
+          </button>
+
+          `
+        }
+
+      </div>
+
+      `;
+
+    });
+
+  }
+
+  html+=`</div>`;
+
+
+  if(record.comments){
+
+    html+=`
+
+    <br>
+
+    <div class="card">
+
+      <h3>Additional Comments</h3>
+
+      <p>${escapeHtml(record.comments)}</p>
+
+    </div>
+
+    `;
+
+  }
+
+
+  document.getElementById("record-detail").innerHTML=html;
+
+  showPage("record-detail");
+
+}
+
+
+/* ============================================================
+   FAULTS
+   ============================================================ */
+
+function renderFaults(){
+
+  const faults=getFaults();
+
+  const open=
+    document.getElementById("open-faults");
+
+  const closed=
+    document.getElementById("closed-faults");
+
+  if(!open || !closed)return;
+
+  const openFaults=
+    faults.filter(f=>f.status==="OPEN");
+
+  const closedFaults=
+    faults.filter(f=>f.status==="CLOSED");
+
+
+  if(!openFaults.length){
+
+    open.innerHTML=`
+      <div class="empty">
+        <div style="font-size:35px">✅</div>
+        No open defects.
+      </div>
+    `;
+
+  }else{
+
+    open.innerHTML=
+      openFaults.map(renderFaultCard).join("");
+
+  }
+
+
+  if(!closedFaults.length){
+
+    closed.innerHTML=`
+      <div class="empty">
+        No completed repairs yet.
+      </div>
+    `;
+
+  }else{
+
+    closed.innerHTML=
+      closedFaults.map(renderFaultCard).join("");
+
+  }
+
+}
+
+
+function renderFaultCard(fault){
+
+  const forklift=
+    getForklifts().find(f=>f.id===fault.forkliftId);
+
+  return `
+
+  <div class="fault-item ${fault.status==="CLOSED"?"closed":""}">
+
+    <div class="section-header">
+
+      <strong>
+        ${escapeHtml(forklift?.assetId || "Unknown")}
+      </strong>
+
+      <span class="badge ${
+        fault.status==="OPEN"
+        ?"badge-open"
+        :"badge-closed"
+      }">
+        ${fault.status}
+      </span>
+
+    </div>
+
+    <div class="record-meta">
+      ${escapeHtml(fault.section)}
+    </div>
+
+    <br>
+
+    <strong>${escapeHtml(fault.item)}</strong>
+
+    <p>
+      ${escapeHtml(fault.description)}
+    </p>
+
+    <div class="detail-list">
+
+      <div class="detail-row">
+        <span>Reported By</span>
+        <strong>${escapeHtml(fault.reportedBy)}</strong>
+      </div>
+
+      <div class="detail-row">
+        <span>Reported</span>
+        <strong>${formatDate(fault.reportedAt)}</strong>
+      </div>
+
+      ${
+        fault.status==="CLOSED"
+        ?
+
+        `
+
+        <div class="detail-row">
+          <span>Repair</span>
+          <strong>${escapeHtml(fault.repairAction)}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Repaired By</span>
+          <strong>${escapeHtml(fault.repairedBy)}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Repair Date</span>
+          <strong>${escapeHtml(fault.repairDate)}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Sign-Off</span>
+          <strong>${escapeHtml(fault.repairSignature)}</strong>
+        </div>
+
+        `
+
+        :
+
+        `
+
+        <div style="margin-top:12px">
+          <button
+            class="btn btn-primary"
+            onclick="openRepairModal('${fault.id}')">
+            🔧 Record Repair
+          </button>
+        </div>
+
+        `
+      }
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+
+/* ============================================================
+   REPAIR MODAL
+   ============================================================ */
+
+function openRepairModal(faultId){
+
+  const fault=
+    getFaults().find(f=>f.id===faultId);
+
+  if(!fault)return;
+
+  document.getElementById("repair-fault-id").value=faultId;
+
+  document.getElementById("repair-fault-summary").innerHTML=`
+
+    <strong>${escapeHtml(fault.item)}</strong><br>
+
+    ${escapeHtml(fault.description)}
+
+  `;
+
+  document.getElementById("repair-action").value="";
+  document.getElementById("repair-parts").value="";
+  document.getElementById("repair-person").value="";
+  document.getElementById("repair-date").value=
+    new Date().toISOString().split("T")[0];
+  document.getElementById("repair-test").value="";
+  document.getElementById("repair-signature").value="";
+
+  document.getElementById("repair-modal").classList.add("show");
+}
+
+
+function completeRepair(){
+
+  const id=
+    document.getElementById("repair-fault-id").value;
+
+  const action=
+    document.getElementById("repair-action").value.trim();
+
+  const parts=
+    document.getElementById("repair-parts").value.trim();
+
+  const repairedBy=
+    document.getElementById("repair-person").value.trim();
+
+  const repairDate=
+    document.getElementById("repair-date").value;
+
+  const test=
+    document.getElementById("repair-test").value.trim();
+
+  const signature=
+    document.getElementById("repair-signature").value.trim();
+
+  if(!action){
+    toast("Repair action is required.");
+    return;
+  }
+
+  if(!repairedBy){
+    toast("Repaired by is required.");
+    return;
+  }
+
+  if(!repairDate){
+    toast("Repair date is required.");
+    return;
+  }
+
+  if(!test){
+    toast("Enter the repair verification / test results.");
+    return;
+  }
+
+  if(!signature){
+    toast("Maintenance sign-off is required.");
+    return;
+  }
+
+  const faults=getFaults();
+
+  const fault=faults.find(f=>f.id===id);
+
+  if(!fault)return;
+
+  fault.repairAction=action;
+  fault.repairParts=parts;
+  fault.repairedBy=repairedBy;
+  fault.repairDate=repairDate;
+  fault.repairTest=test;
+  fault.repairSignature=signature;
+  fault.status="CLOSED";
+  fault.closedAt=new Date().toISOString();
+
+  saveData(STORAGE_KEYS.faults,faults);
+
+  closeModal("repair-modal");
+
+  toast("Repair recorded and fault closed.");
+
+  renderAll();
+
+}
+
+
+/* ============================================================
+   FLEET
+   ============================================================ */
+
+function renderFleet(){
+
+  const container=
+    document.getElementById("fleet-list");
+
+  if(!container)return;
+
+  const forklifts=getForklifts();
+
+  if(!forklifts.length){
+
+    container.innerHTML=`
+      <div class="empty">
+        No forklifts added.
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML=forklifts.map(forklift=>{
+
+    const openFaults=
+      getFaults().filter(
+        f=>f.forkliftId===forklift.id &&
+        f.status==="OPEN"
+      );
+
+    const inspections=
+      getInspections().filter(
+        i=>i.forkliftId===forklift.id
+      );
+
+    const last=
+      inspections[0];
+
+    const outOfService=openFaults.length>0;
+
+    return `
+
+    <div class="card fleet-card">
+
+      <div class="fleet-top">
+
+        <div>
+
+          <div class="forklift-id">
+            ${escapeHtml(forklift.assetId)}
+          </div>
+
+          <div style="color:var(--muted)">
+            ${escapeHtml(forklift.model || "Forklift")}
+          </div>
+
+        </div>
+
+        <span class="badge ${
+          outOfService
+          ?"badge-service"
+          :"badge-pass"
+        }">
+
+          ${
+            outOfService
+            ?"OUT OF SERVICE"
+            :"AVAILABLE"
+          }
+
+        </span>
+
+      </div>
+
+      <div class="detail-list">
+
+        <div class="detail-row">
+          <span>Location</span>
+          <strong>${escapeHtml(forklift.location || "-")}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Serial</span>
+          <strong>${escapeHtml(forklift.serial || "-")}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Open Faults</span>
+          <strong class="${openFaults.length?"red":"green"}">
+            ${openFaults.length}
+          </strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Inspections</span>
+          <strong>${inspections.length}</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Last Check</span>
+          <strong>
+            ${last ? formatDate(last.inspectedAt) : "Never"}
+          </strong>
+        </div>
+
+      </div>
+
+      ${
+        openFaults.length
+        ?
+        `<div class="notice notice-danger">
+          ⚠️ This forklift has unresolved defects and is marked OUT OF SERVICE.
+        </div>`
+        :
+        `<div class="notice notice-success">
+          ✓ No open defects recorded.
+        </div>`
+      }
+
+      <div class="actions">
+
+        <button
+          class="btn btn-primary"
+          onclick="startInspection('${forklift.id}')">
+          New Check
+        </button>
+
+        <button
+          class="btn btn-danger"
+          onclick="deleteForklift('${forklift.id}')">
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+    `;
+
+  }).join("");
+
+}
+
+
+function startInspection(id){
+
+  document.getElementById("inspection-forklift").value=id;
+
+  showPage("new-inspection");
+
+}
+
+
+/* ============================================================
+   ADD FORKLIFT
+   ============================================================ */
+
+function openForkliftModal(){
+
+  document.getElementById("new-forklift-id").value="";
+  document.getElementById("new-forklift-model").value="";
+  document.getElementById("new-forklift-serial").value="";
+  document.getElementById("new-forklift-location").value="";
+
+  document.getElementById("forklift-modal").classList.add("show");
+
+}
+
+
+function addForklift(){
+
+  const assetId=
+    document.getElementById("new-forklift-id").value.trim();
+
+  const model=
+    document.getElementById("new-forklift-model").value.trim();
+
+  const serial=
+    document.getElementById("new-forklift-serial").value.trim();
+
+  const location=
+    document.getElementById("new-forklift-location").value.trim();
+
+  if(!assetId){
+
+    toast("Forklift ID is required.");
+
+    return;
+  }
+
+  const forklifts=getForklifts();
+
+  if(
+    forklifts.some(
+      f=>f.assetId.toLowerCase()===assetId.toLowerCase()
+    )
+  ){
+
+    toast("That forklift ID already exists.");
+
+    return;
+  }
+
+  forklifts.push({
+
+    id:crypto.randomUUID(),
+
+    assetId,
+    model,
+    serial,
+    location,
+
+    createdAt:new Date().toISOString()
+
+  });
+
+  saveData(STORAGE_KEYS.forklifts,forklifts);
+
+  closeModal("forklift-modal");
+
+  populateForkliftSelect();
+
+  renderAll();
+
+  toast("Forklift added.");
+
+}
+
+
+function deleteForklift(id){
+
+  const forklift=
+    getForklifts().find(f=>f.id===id);
+
+  if(!forklift)return;
+
+  const faults=
+    getFaults().filter(f=>f.forkliftId===id);
+
+  const inspections=
+    getInspections().filter(i=>i.forkliftId===id);
+
+  if(inspections.length || faults.length){
+
+    alert(
+      "This forklift has inspection or maintenance records and cannot be deleted."
+    );
+
+    return;
+  }
+
+  if(!confirm(`Delete ${forklift.assetId}?`))return;
+
+  const forklifts=
+    getForklifts().filter(f=>f.id!==id);
+
+  saveData(STORAGE_KEYS.forklifts,forklifts);
+
+  populateForkliftSelect();
+
+  renderAll();
+
+  toast("Forklift deleted.");
+
+}
+
+
+/* ============================================================
+   SELECT
+   ============================================================ */
+
+function populateForkliftSelect(){
+
+  const select=
+    document.getElementById("inspection-forklift");
+
+  if(!select)return;
+
+  const forklifts=getForklifts();
+
+  select.innerHTML=
+    `<option value="">Select forklift...</option>`+
+    forklifts.map(f=>`
+
+      <option value="${escapeHtml(f.id)}">
+        ${escapeHtml(f.assetId)}
+        ${f.model ? " — "+escapeHtml(f.model) : ""}
+      </option>
+
+    `).join("");
+
+}
+
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+
+function renderDashboard(){
+
+  const forklifts=getForklifts();
+  const inspections=getInspections();
+  const faults=getFaults();
+
+  document.getElementById("stat-forklifts").textContent=
+    forklifts.length;
+
+  document.getElementById("stat-inspections").textContent=
+    inspections.length;
+
+  document.getElementById("stat-open").textContent=
+    faults.filter(f=>f.status==="OPEN").length;
+
+  document.getElementById("stat-closed").textContent=
+    faults.filter(f=>f.status==="CLOSED").length;
+
+
+  const fleetContainer=
+    document.getElementById("dashboard-fleet");
+
+  if(fleetContainer){
+
+    if(!forklifts.length){
+
+      fleetContainer.innerHTML=
+        `<div class="empty">No forklifts.</div>`;
+
+    }else{
+
+      fleetContainer.innerHTML=
+        forklifts.slice(0,6).map(f=>{
+
+          const open=
+            faults.filter(
+              x=>x.forkliftId===f.id &&
+              x.status==="OPEN"
+            ).length;
+
+          return `
+
+          <div class="detail-row">
+
+            <span>
+              <strong>${escapeHtml(f.assetId)}</strong>
+            </span>
+
+            <span class="badge ${
+              open
+              ?"badge-service"
+              :"badge-pass"
+            }">
+              ${open ? "OUT OF SERVICE" : "AVAILABLE"}
+            </span>
+
+          </div>
+
+          `;
+
+        }).join("");
+
+    }
+
+  }
+
+
+  const recentContainer=
+    document.getElementById("dashboard-inspections");
+
+  if(recentContainer){
+
+    if(!inspections.length){
+
+      recentContainer.innerHTML=
+        `<div class="empty">No inspections yet.</div>`;
+
+    }else{
+
+      recentContainer.innerHTML=
+        inspections.slice(0,5).map(i=>{
+
+          const forklift=
+            forklifts.find(f=>f.id===i.forkliftId);
+
+          return `
+
+          <div class="detail-row">
+
+            <span>
+              <strong>
+                ${escapeHtml(forklift?.assetId || "-")}
+              </strong>
+
+              <br>
+
+              <small>
+                ${escapeHtml(i.operator)}
+              </small>
+
+            </span>
+
+            <span class="badge ${
+              i.overallStatus==="PASS"
+              ?"badge-pass"
+              :"badge-fail"
+            }">
+              ${i.overallStatus}
+            </span>
+
+          </div>
+
+          `;
+
+        }).join("");
+
+    }
+
+  }
+
+
+  const faultContainer=
+    document.getElementById("dashboard-faults");
+
+  if(faultContainer){
+
+    const openFaults=
+      faults.filter(f=>f.status==="OPEN");
+
+    if(!openFaults.length){
+
+      faultContainer.innerHTML=`
+
+        <div class="empty">
+
+          <div style="font-size:40px">✅</div>
+
+          No open defects.
+
+        </div>
+
+      `;
+
+    }else{
+
+      faultContainer.innerHTML=
+        openFaults.slice(0,8).map(renderFaultCard).join("");
+
+    }
+
+  }
+
+}
+
+
+/* ============================================================
+   EXPORT
+   ============================================================ */
+
+function downloadCSV(filename,rows){
+
+  if(!rows.length){
+
+    toast("No records to export.");
+
+    return;
+  }
+
+  const headers=Object.keys(rows[0]);
+
+  const csv=[
+    headers.join(","),
+    ...rows.map(row=>
+      headers.map(h=>
+        csvEscape(row[h])
+      ).join(",")
+    )
+  ].join("\n");
+
+  const blob=
+    new Blob([csv],{type:"text/csv;charset=utf-8;"});
+
+  const url=
+    URL.createObjectURL(blob);
+
+  const a=document.createElement("a");
+
+  a.href=url;
+  a.download=filename;
+
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+function csvEscape(value){
+
+  const text=
+    value===undefined || value===null
+    ? ""
+    : String(value);
+
+  return `"${text.replace(/"/g,'""')}"`;
+
+}
+
+
+function exportInspections(){
+
+  const forklifts=getForklifts();
+
+  const rows=getInspections().map(i=>{
+
+    const forklift=
+      forklifts.find(f=>f.id===i.forkliftId);
+
+    return {
+
+      Date:formatDate(i.inspectedAt),
+
+      Forklift:forklift?.assetId || "",
+
+      Model:forklift?.model || "",
+
+      Operator:i.operator,
+
+      Location:i.location,
+
+      Shift:i.shift,
+
+      Hour_Meter:i.hourMeter,
+
+      Result:i.overallStatus,
+
+      Comments:i.comments,
+
+      Sign_Off:i.signature
+
+    };
+
+  });
+
+  downloadCSV(
+    `forklift-inspections-${dateStamp()}.csv`,
+    rows
+  );
+
+}
+
+
+function exportFaults(){
+
+  const forklifts=getForklifts();
+
+  const rows=getFaults().map(f=>{
+
+    const forklift=
+      forklifts.find(x=>x.id===f.forkliftId);
+
+    return {
+
+      Forklift:forklift?.assetId || "",
+
+      Section:f.section,
+
+      Item:f.item,
+
+      Defect:f.description,
+
+      Status:f.status,
+
+      Reported_By:f.reportedBy,
+
+      Reported_Date:formatDate(f.reportedAt),
+
+      Repair_Action:f.repairAction,
+
+      Parts:f.repairParts,
+
+      Repaired_By:f.repairedBy,
+
+      Repair_Date:f.repairDate,
+
+      Test_Results:f.repairTest,
+
+      Maintenance_Signoff:f.repairSignature,
+
+      Closed_Date:formatDate(f.closedAt)
+
+    };
+
+  });
+
+  downloadCSV(
+    `forklift-faults-${dateStamp()}.csv`,
+    rows
+  );
+
+}
+
+
+/* ============================================================
+   MODALS
+   ============================================================ */
+
+function closeModal(id){
+
+  document.getElementById(id)
+    ?.classList.remove("show");
+
+}
+
+document.querySelectorAll(".modal-backdrop").forEach(modal=>{
+
+  modal.addEventListener("click",e=>{
+
+    if(e.target===modal){
+      modal.classList.remove("show");
     }
 
   });
 
-  const list = Object.values(assets);
+});
 
-  const container = document.getElementById("fleetList");
 
-  if (!list.length) {
+/* ============================================================
+   CLEAR DATA
+   ============================================================ */
 
-    container.innerHTML =
-      `<div class="empty">No forklifts recorded yet.</div>`;
+function confirmClearData(){
+
+  const answer=prompt(
+    'This will delete ALL local Forklift Check data. Type DELETE to confirm.'
+  );
+
+  if(answer!=="DELETE"){
+
+    toast("Data was not deleted.");
 
     return;
   }
 
-  container.innerHTML = list.map(a => `
+  localStorage.removeItem(STORAGE_KEYS.forklifts);
+  localStorage.removeItem(STORAGE_KEYS.inspections);
+  localStorage.removeItem(STORAGE_KEYS.faults);
 
-    <div class="record">
+  initialise();
 
-      <div class="record-head">
+  toast("All local data deleted.");
 
-        <div>
-          <strong>${escapeHTML(a.assetId)}</strong>
-          ${a.model ? " — " + escapeHTML(a.model) : ""}
-          <br>
-          <small>
-            Last inspection:
-            ${formatDate(a.last.date)}
-          </small>
-        </div>
-
-        <span class="status ${a.last.status === "PASS" ? "pass" : "fail"}">
-          ${a.last.status === "PASS" ? "AVAILABLE" : "CHECK REQUIRED"}
-        </span>
-
-      </div>
-
-      <p>
-        Hour meter:
-        <strong>${escapeHTML(a.last.hourMeter || "Not recorded")}</strong>
-      </p>
-
-      <button
-        class="secondary-btn"
-        onclick="filterAsset('${encodeURIComponent(a.assetId)}')">
-        View History
-      </button>
-
-    </div>
-
-  `).join("");
 }
 
-function filterAsset(assetEncoded) {
 
-  const asset = decodeURIComponent(assetEncoded);
+/* ============================================================
+   RENDER EVERYTHING
+   ============================================================ */
 
-  showPage(
-    "records",
-    document.querySelectorAll(".nav button")[2]
-  );
-
-  document.getElementById("recordSearch").value = asset;
-
-  renderRecords();
-}
-
-function viewRecord(id) {
-
-  const record = inspections.find(r => r.id === id);
-
-  if (!record) return;
-
-  currentRecordId = id;
-
-  const failed = record.checks.filter(c => c.result === "FAIL");
-
-  document.getElementById("recordDetails").innerHTML = `
-
-    <div class="card" style="box-shadow:none;padding:0;border:0;">
-
-      <h3>
-        ${escapeHTML(record.assetId)}
-        ${record.model ? " — " + escapeHTML(record.model) : ""}
-      </h3>
-
-      <p>
-        <strong>Status:</strong>
-        <span class="status ${record.status === "PASS" ? "pass" : "fail"}">
-          ${record.status}
-        </span>
-      </p>
-
-      <p><strong>Date:</strong> ${formatDate(record.date)}</p>
-      <p><strong>Operator:</strong> ${escapeHTML(record.operator)}</p>
-      <p><strong>Location:</strong> ${escapeHTML(record.location || "-")}</p>
-      <p><strong>Shift:</strong> ${escapeHTML(record.shift)}</p>
-      <p><strong>Hour meter:</strong> ${escapeHTML(record.hourMeter || "-")}</p>
-      <p><strong>Sign-off:</strong> ${escapeHTML(record.signature)}</p>
-
-      <hr>
-
-      <h3>Inspection Results</h3>
-
-      ${record.checks.map(c => `
-
-        <div style="
-          padding:9px 0;
-          border-bottom:1px solid #eee;
-          display:flex;
-          justify-content:space-between;
-          gap:10px;
-        ">
-
-          <span>
-            ${escapeHTML(c.section)} —
-            ${escapeHTML(c.item)}
-          </span>
-
-          <strong style="
-            color:${c.result === "FAIL"
-              ? "#dc2626"
-              : c.result === "PASS"
-                ? "#16a34a"
-                : "#6b7280"};
-          ">
-            ${c.result}
-          </strong>
-
-        </div>
-
-      `).join("")}
-
-      ${
-        failed.length
-        ? `
-          <div class="alert danger" style="margin-top:15px;">
-            <strong>Failed items</strong>
-            ${failed.map(f => `
-              <p>
-                <strong>${escapeHTML(f.item)}</strong><br>
-                ${escapeHTML(f.fault || "No description provided.")}
-              </p>
-            `).join("")}
-          </div>
-        `
-        : `
-          <div class="alert" style="
-            background:#dcfce7;
-            color:#166534;
-            margin-top:15px;
-          ">
-            <strong>✓ No defects reported.</strong>
-          </div>
-        `
-      }
-
-      ${
-        record.comments
-        ? `
-          <hr>
-          <h3>Comments</h3>
-          <p>${escapeHTML(record.comments)}</p>
-        `
-        : ""
-      }
-
-    </div>
-  `;
-
-  document.getElementById("recordModal").classList.add("show");
-}
-
-function closeModal() {
-
-  document.getElementById("recordModal")
-    .classList.remove("show");
-
-  currentRecordId = null;
-}
-
-function deleteCurrentRecord() {
-
-  if (!currentRecordId) return;
-
-  if (!confirm(
-    "Delete this inspection record permanently from this device?"
-  )) return;
-
-  inspections =
-    inspections.filter(r => r.id !== currentRecordId);
-
-  saveData();
-
-  closeModal();
+function renderAll(){
 
   renderDashboard();
   renderRecords();
   renderFaults();
   renderFleet();
+  populateForkliftSelect();
+
 }
 
-function exportCSV() {
 
-  if (!inspections.length) {
+/* ============================================================
+   UTILITIES
+   ============================================================ */
 
-    alert("There are no records to export.");
+function formatDate(value){
 
-    return;
-  }
+  if(!value)return "-";
 
-  const rows = [[
-    "Record ID",
-    "Date",
-    "Asset ID",
-    "Model",
-    "Hour Meter",
-    "Operator",
-    "Location",
-    "Shift",
-    "Status",
-    "Faults",
-    "Comments"
-  ]];
+  const date=new Date(value);
 
-  inspections.forEach(r => {
+  if(Number.isNaN(date.getTime()))return value;
 
-    rows.push([
-      r.id,
-      r.date,
-      r.assetId,
-      r.model,
-      r.hourMeter,
-      r.operator,
-      r.location,
-      r.shift,
-      r.status,
-      r.faults
-        .map(f => `${f.item}: ${f.description}`)
-        .join(" | "),
-      r.comments
-    ]);
-
-  });
-
-  const csv = rows.map(row =>
-    row.map(value =>
-      `"${String(value ?? "")
-        .replace(/"/g, '""')}"`
-    ).join(",")
-  ).join("\n");
-
-  const blob = new Blob(
-    [csv],
-    {type:"text/csv;charset=utf-8;"}
+  return date.toLocaleString(
+    "en-AU",
+    {
+      day:"2-digit",
+      month:"2-digit",
+      year:"numeric",
+      hour:"2-digit",
+      minute:"2-digit"
+    }
   );
 
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-
-  a.href = url;
-  a.download =
-    "forklift-inspection-records.csv";
-
-  a.click();
-
-  URL.revokeObjectURL(url);
 }
 
-function escapeHTML(value) {
 
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+function dateStamp(){
+
+  return new Date()
+    .toISOString()
+    .slice(0,10);
+
 }
 
-buildChecklist();
-renderDashboard();
+
+function escapeHtml(value){
+
+  if(value===undefined || value===null){
+    return "";
+  }
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function toast(message){
+
+  const el=document.getElementById("toast");
+
+  el.textContent=message;
+
+  el.classList.add("show");
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer=
+    setTimeout(()=>{
+      el.classList.remove("show");
+    },3500);
+
+}
+
+
+/* ============================================================
+   START
+   ============================================================ */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  initialise
+);
 
 </script>
 
 </body>
 </html>
-```
